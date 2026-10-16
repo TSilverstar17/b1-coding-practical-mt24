@@ -112,7 +112,7 @@ class ClosedLoop:
             reference_t = mission.reference[t]
 
             # Calculate action using controller.
-            actions[t] = self.controller(observation_t, reference_t)
+            actions[t] = self.controller.compute_control(reference_t, observation_t)
 
             # Apply the action and disturbance to the submarine.
             self.plant.transition(actions[t], disturbances[t])
