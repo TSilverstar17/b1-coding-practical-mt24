@@ -16,3 +16,5 @@ class Controller:
 
         # Update previous values for the next iteration
         self.prev_error = error
+
+        return u
