@@ -102,9 +102,19 @@ class ClosedLoop:
         self.plant.reset_state()
 
         for t in range(T):
+            # Record the submarine's current position.
             positions[t] = self.plant.get_position()
+
+            # Measure the current depth.
             observation_t = self.plant.get_depth()
-            # Call your controller here
+
+            # Obtain the target depth at current time.
+            reference_t = mission.reference[t]
+
+            # Calculate action using controller.
+            actions[t] = self.controller(observation_t, reference_t)
+
+            # Apply the action and disturbance to the submarine.
             self.plant.transition(actions[t], disturbances[t])
 
         return Trajectory(positions)
